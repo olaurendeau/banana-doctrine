@@ -79,9 +79,6 @@ class PersistenceCommand extends Command
         $this->printEntity($chair, "Damn ! Modified chair have been flushed !");
     }
 
-    private function 
-
-
     private function getChair($id)
     {
         $chair = $this->em->find('Banana\Doctrine\Entity\Chair', $id);
