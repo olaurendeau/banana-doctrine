@@ -53,6 +53,7 @@ class PersistenceCommand extends Command
 
         //Retrieve our good old chair from database
         $chair = $this->getChair(1);
+        //$this->em->detach($chair);
 
         //And modified it a bit
         $chair->setType("New");
