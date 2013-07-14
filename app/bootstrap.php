@@ -11,6 +11,11 @@ use Banana\Doctrine\Command\AutoFetchCommand;
 
 $app = new Silex\Application();
 
+//Monolog
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => __DIR__.'/logs/dev.log',
+));
+
 //Console
 $app->register(new ConsoleServiceProvider(), array(
     'console.name'              => 'Banana Doctrine',
@@ -46,5 +51,8 @@ $app->register(new Nutwerk\Provider\DoctrineORMServiceProvider(), array(
         'namespace' => 'Banana\Doctrine\Entity', // your classes namespace
     )),
 ));
+
+//SetUp logger for Doctrine
+$app['db.config']->setSQLLogger(new Doctrine\DBAL\Logging\DebugStack());
 
 return $app;

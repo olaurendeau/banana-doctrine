@@ -48,8 +48,9 @@ class AutoFetchCommand extends AbstractCommand
         unset($student);
 
         $student = $this->getStudent(1);
-        //$student = $this->getStudentWithRelationShip(1);
         //$student = $this->getStudentWithoutRelationShip(1);
+        //$student = $this->getStudentWithoutRelationShipDQL(1);
+        //$student = $this->getStudentWithRelationShip(1);
         $this->printEntity($student, "Student fetched from database");
     }
 
@@ -61,7 +62,15 @@ class AutoFetchCommand extends AbstractCommand
             ->where('s.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true)
+            //->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true)
+            ->getSingleResult();
+    }
+
+    public function getStudentWithoutRelationShipDQL($id)
+    {
+        return $this->em->createQuery("select s from Banana\Doctrine\Entity\Student s where s.id = :id")
+            ->setParameter('id', $id)
+            //->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true)
             ->getSingleResult();
     }
 

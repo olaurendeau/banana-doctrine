@@ -16,7 +16,8 @@
         "knplabs/console-service-provider": "dev-master",
         "silex/silex": "1.*",
         "doctrine/dbal": ">=2.2,<2.5-dev",
-        "taluu/doctrine-orm-provider": "1.0.*@dev"
+        "taluu/doctrine-orm-provider": "1.0.*@dev",
+        "monolog/monolog": "1.6.*@dev"
     },
     "autoload": {
         "psr-0": { "Banana\\Doctrine\\": "src/" }

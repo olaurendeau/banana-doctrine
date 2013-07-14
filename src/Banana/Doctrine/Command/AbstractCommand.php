@@ -34,7 +34,7 @@ abstract class AbstractCommand extends Command
         }
 
         if ($input->getOption('show')) {
-            $this->em->getEventManager()->addEventSubscriber(new OutputSubscriber($output));
+            $this->em->getEventManager()->addEventSubscriber(new OutputSubscriber($output, $this->app));
         }
 
         //Run example
