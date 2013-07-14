@@ -2,12 +2,12 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use Doctrine\Common\Cache\ApcCache;
 use Doctrine\Common\Cache\ArrayCache;
 use Knp\Provider\ConsoleServiceProvider;
 use Knp\Console\ConsoleEvents;
 use Knp\Console\ConsoleEvent;
 use Banana\Doctrine\Command\PersistenceCommand;
+use Banana\Doctrine\Command\AutoFetchCommand;
 
 $app = new Silex\Application();
 
@@ -21,6 +21,7 @@ $app->register(new ConsoleServiceProvider(), array(
 $app['dispatcher']->addListener(ConsoleEvents::INIT, function(ConsoleEvent $event) {
     $app = $event->getApplication();
     $app->add(new PersistenceCommand());
+    $app->add(new AutoFetchCommand());
 });
 
 

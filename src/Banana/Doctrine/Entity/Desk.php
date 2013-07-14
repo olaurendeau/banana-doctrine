@@ -4,12 +4,13 @@ namespace Banana\Doctrine\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Banana\Doctrine\Entity\Chair;
+use Banana\Doctrine\Entity\Student;
 
 /**
  * @Entity
  * @Table(name="desk")
  */
-class Desk extends OutputableEntity
+class Desk
 {
     /**
      * @Id
@@ -24,9 +25,16 @@ class Desk extends OutputableEntity
     protected $shape;
 
     /**
-     * @OneToMany(targetEntity="Chair", mappedBy="table")
+     * @OneToMany(targetEntity="Chair", mappedBy="desk", cascade={"all"})
      */
     protected $chairs;
+
+    /**
+     * @OneToOne(targetEntity="Student", inversedBy="desk", cascade={"all"})
+     * @JoinColumn(name="id_student", referencedColumnName="id")
+     */
+    protected $student;
+
 
     public function __construct()
     {
@@ -38,7 +46,7 @@ class Desk extends OutputableEntity
      */
     public function addChair(Chair $chair)
     {
-        $chair->setTable($this);
+        $chair->setDesk($this);
         $this->chairs[] = $chair;
     }
 
@@ -92,12 +100,28 @@ class Desk extends OutputableEntity
         return $this->shape;
     }
 
+    /**
+     * @param mixed $student
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
     public function __toString()
     {
         $out = sprintf('Desk - id : "%s", shape : "%s"'."\n", $this->id, $this->shape);
 
         foreach ($this->chairs as $chair) {
-            $out .= $chair;
+            $out .= ' - '.$chair;
         }
 
         return $out;

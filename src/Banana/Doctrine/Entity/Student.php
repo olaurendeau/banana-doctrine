@@ -1,14 +1,14 @@
 <?php
 
+
 namespace Banana\Doctrine\Entity;
 
-use Banana\Doctrine\Entity\Desk;
 
 /**
  * @Entity
- * @Table(name="chair")
+ * @Table("student")
  */
-class Chair
+class Student
 {
     /**
      * @Id
@@ -20,13 +20,45 @@ class Chair
     /**
      * @Column(type="string")
      */
-    protected $type;
+    protected $name;
 
     /**
-     * @ManyToOne(targetEntity="Desk", inversedBy="chairs")
-     * @JoinColumn(name="id_desk", referencedColumnName="id")
+     * @OneToOne(targetEntity="Desk", mappedBy="student", cascade={"all"})
      */
     protected $desk;
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $desk
+     */
+    public function setDesk($desk)
+    {
+        $desk->setStudent($this);
+        $this->desk = $desk;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDesk()
+    {
+        return $this->desk;
+    }
 
     /**
      * @param mixed $id
@@ -44,40 +76,11 @@ class Chair
         return $this->id;
     }
 
-    /**
-     * @param mixed $desk
-     */
-    public function setDesk(Desk $desk)
-    {
-        $this->desk = $desk;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDesk()
-    {
-        return $this->desk;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
     public function __toString()
     {
-        return sprintf('Chair - id : "%s", type : "%s"'."\n", $this->id, $this->type);
+        $out = sprintf('Student - id : "%s", name : "%s"'."\n", $this->id, $this->name);
+        $out .= $this->getDesk();
+
+        return $out;
     }
 }
