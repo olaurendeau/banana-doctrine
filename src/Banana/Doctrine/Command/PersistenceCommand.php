@@ -4,6 +4,8 @@ namespace Banana\Doctrine\Command;
 
 use Banana\Doctrine\Entity\Chair;
 use Banana\Doctrine\Entity\Desk;
+use Banana\Doctrine\Entity\Student;
+use Banana\Doctrine\Entity\StudentDetail;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -17,6 +19,32 @@ class PersistenceCommand extends AbstractCommand
             ->setName('banana:doctrine:persistence')
             ->addArgument('example', InputArgument::REQUIRED, 'Which example should we run ?')
             ->setDescription('Test doctrine persistence');
+    }
+
+    protected function persistCascade()
+    {
+        $student = new Student();
+        $student->setName('Foo');
+
+        //We have to persist / flush student first to allow StudentDetail to use Student::id
+        $this->em->persist($student);
+        $this->em->flush($student);
+
+        $studentDetail = new StudentDetail();
+        $studentDetail->setAge(48);
+
+        $desk = new Desk();
+        $desk->setShape('Squared');
+
+        $student->setStudentDetail($studentDetail);
+        $student->setDesk($desk);
+
+        $this->printEntity($student, "Student");
+
+        $this->em->persist($student);
+        $this->em->flush($student);
+
+        $this->printEntity($this->getStudent(1), "Modified Student");
     }
 
     protected function accidentalPersistence()

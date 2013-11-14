@@ -34,7 +34,7 @@ $app['dispatcher']->addListener(ConsoleEvents::INIT, function(ConsoleEvent $even
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'dbname'   => 'banana_doctrine',
-        'password' => 'vagrant',
+        'password' => 'lafourchette',
         'charset'  => 'UTF8'
     ),
 ));

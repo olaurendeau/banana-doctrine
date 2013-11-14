@@ -23,7 +23,7 @@ class Chair
     protected $type;
 
     /**
-     * @ManyToOne(targetEntity="Desk", inversedBy="chairs")
+     * @ManyToOne(targetEntity="Desk", inversedBy="chairs", cascade = {"all"})
      * @JoinColumn(name="id_desk", referencedColumnName="id")
      */
     protected $desk;

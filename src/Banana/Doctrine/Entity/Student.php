@@ -28,6 +28,11 @@ class Student
     protected $desk;
 
     /**
+     * @OneToOne(targetEntity="Banana\Doctrine\Entity\StudentDetail", mappedBy="student", cascade={"all"})
+     */
+    protected $studentDetail;
+
+    /**
      * @param mixed $name
      */
     public function setName($name)
@@ -76,9 +81,28 @@ class Student
         return $this->id;
     }
 
+    /**
+     * @param mixed $studentDetail
+     */
+    public function setStudentDetail($studentDetail)
+    {
+        $studentDetail->setStudent($this);
+
+        $this->studentDetail = $studentDetail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudentDetail()
+    {
+        return $this->studentDetail;
+    }
+
     public function __toString()
     {
         $out = sprintf('Student - id : "%s", name : "%s"'."\n", $this->id, $this->name);
+        $out .= $this->getStudentDetail();
         $out .= $this->getDesk();
 
         return $out;

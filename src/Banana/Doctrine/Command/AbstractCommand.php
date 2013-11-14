@@ -82,6 +82,7 @@ abstract class AbstractCommand extends Command
         $connection = $this->em->getConnection();
         $connection->query("SET FOREIGN_KEY_CHECKS = 0");
         $connection->query("TRUNCATE student");
+        $connection->query("TRUNCATE student_detail");
         $connection->query("TRUNCATE chair");
         $connection->query("TRUNCATE desk");
         $connection->query("SET FOREIGN_KEY_CHECKS = 1");
