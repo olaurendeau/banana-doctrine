@@ -22,6 +22,16 @@ class StudentDetail
      */
     protected $age;
 
+    public function getId()
+    {
+        if (!$this->student) {
+            return "null";
+        }
+
+
+        return $this->student->getId();
+    }
+
     /**
      * @param mixed $age
      */

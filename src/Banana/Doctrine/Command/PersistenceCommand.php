@@ -45,6 +45,22 @@ class PersistenceCommand extends AbstractCommand
         $this->em->flush($student);
 
         $this->printEntity($this->getStudent(1), "Modified Student");
+
+        $this->em->clear();
+
+        $student = $this->getStudent(1);
+
+        $student->setName('Foo Bar');
+        $student->getDesk()->setShape("Circled");
+        $student->getStudentDetail()->setAge(75);
+
+        //Changes will not be updated on database
+        $this->em->flush($student);
+        
+        //$this->em->flush(array($student, $studentDetail, $desk));
+
+        $this->em->clear();
+        $this->printEntity($this->getStudent(1), "Modified StudentDetail");
     }
 
     protected function accidentalPersistence()
